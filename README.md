@@ -67,15 +67,7 @@ curl --location 'http://localhost:8080/users' \
     "id": 1,
     "name": "Luccas Pereira Nunes",
     "email": "luccas.lpn@outlook.com",
-    "document": "48188562823",
-    "wallet": {
-        "id": 1,
-        "balance": 0.0
-    },
-    "transactionLimits": {
-        "dailyLimit": 5000.0,
-        "monthlyLimit": 50000.0
-    }
+    "document": "48188562823"
 }
 ```
 
@@ -95,7 +87,6 @@ curl --location 'http://localhost:8080/wallet/1facec34-d88a-4422-9342-6a4d7b9dad
 #### **Resposta Esperada:**
 ```json
 {
-  "walletId": "1facec34-d88a-4422-9342-6a4d7b9dadfc",
   "balance": 1000,
   "currency": "BRL"
 }
