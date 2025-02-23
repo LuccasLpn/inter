@@ -44,6 +44,111 @@ Antes de executar o projeto, certifique-se de ter instalado:
    java -jar target/seu-projeto.jar
    ```
 
+## Estrutura do Banco de Dados
+
+### Tabelas
+
+```sql
+CREATE TABLE exchange_rates
+(
+    id         BIGINT AUTO_INCREMENT NOT NULL,
+    uuid       BINARY(16)            NOT NULL,
+    rate       DECIMAL               NOT NULL,
+    created_at datetime              NOT NULL,
+    CONSTRAINT pk_exchange_rates PRIMARY KEY (id)
+);
+
+CREATE TABLE transaction_limits
+(
+    id          BIGINT AUTO_INCREMENT NOT NULL,
+    uuid        BINARY(16)            NOT NULL,
+    user_id     BIGINT                NOT NULL,
+    daily_limit DECIMAL(15, 2)        NOT NULL,
+    used_today  DECIMAL(15, 2)        NOT NULL,
+    last_reset  date                  NOT NULL,
+    created_at  datetime              NOT NULL,
+    CONSTRAINT pk_transaction_limits PRIMARY KEY (id)
+);
+
+CREATE TABLE transactions
+(
+    id               BIGINT AUTO_INCREMENT NOT NULL,
+    uuid             BINARY(16)            NOT NULL,
+    from_wallet_id   BIGINT                NOT NULL,
+    to_wallet_id     BIGINT                NOT NULL,
+    amount           DECIMAL               NOT NULL,
+    transaction_type VARCHAR(255)          NOT NULL,
+    exchange_rate_id BIGINT                NULL,
+    created_at       datetime              NOT NULL,
+    CONSTRAINT pk_transactions PRIMARY KEY (id)
+);
+
+CREATE TABLE users
+(
+    id         BIGINT AUTO_INCREMENT NOT NULL,
+    uuid       BINARY(16)            NOT NULL,
+    name       VARCHAR(255)          NOT NULL,
+    email      VARCHAR(255)          NOT NULL,
+    document   VARCHAR(255)          NOT NULL,
+    type       VARCHAR(255)          NOT NULL,
+    password   VARCHAR(255)          NOT NULL,
+    created_at datetime              NOT NULL,
+    CONSTRAINT pk_users PRIMARY KEY (id)
+);
+
+CREATE TABLE wallets
+(
+    id           BIGINT AUTO_INCREMENT NOT NULL,
+    uuid         BINARY(16)            NOT NULL,
+    user_id      BIGINT                NOT NULL,
+    balance      DECIMAL               NOT NULL,
+    balance_type VARCHAR(255)          NOT NULL,
+    created_at   datetime              NOT NULL,
+    CONSTRAINT pk_wallets PRIMARY KEY (id)
+);
+
+ALTER TABLE exchange_rates
+    ADD CONSTRAINT uc_exchange_rates_uuid UNIQUE (uuid);
+
+ALTER TABLE transaction_limits
+    ADD CONSTRAINT uc_transaction_limits_user UNIQUE (user_id);
+
+ALTER TABLE transaction_limits
+    ADD CONSTRAINT uc_transaction_limits_uuid UNIQUE (uuid);
+
+ALTER TABLE transactions
+    ADD CONSTRAINT uc_transactions_uuid UNIQUE (uuid);
+
+ALTER TABLE users
+    ADD CONSTRAINT uc_users_document UNIQUE (document);
+
+ALTER TABLE users
+    ADD CONSTRAINT uc_users_email UNIQUE (email);
+
+ALTER TABLE users
+    ADD CONSTRAINT uc_users_uuid UNIQUE (uuid);
+
+ALTER TABLE wallets
+    ADD CONSTRAINT uc_wallets_uuid UNIQUE (uuid);
+
+ALTER TABLE transactions
+    ADD CONSTRAINT FK_TRANSACTIONS_ON_EXCHANGE_RATE FOREIGN KEY (exchange_rate_id) REFERENCES exchange_rates (id);
+
+ALTER TABLE transactions
+    ADD CONSTRAINT FK_TRANSACTIONS_ON_FROM_WALLET FOREIGN KEY (from_wallet_id) REFERENCES wallets (id);
+
+ALTER TABLE transactions
+    ADD CONSTRAINT FK_TRANSACTIONS_ON_TO_WALLET FOREIGN KEY (to_wallet_id) REFERENCES wallets (id);
+
+ALTER TABLE transaction_limits
+    ADD CONSTRAINT FK_TRANSACTION_LIMITS_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);
+
+ALTER TABLE wallets
+    ADD CONSTRAINT FK_WALLETS_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);
+```
+
+![Descrição da imagem](https://cdn.discordapp.com/attachments/827795637113454615/1343037824668274810/image.png?ex=67bbd0f1&is=67ba7f71&hm=f6c08928454430b9308cf7b13a79d0b2f5570f025500999e36b7b506a4c3c00e&)
+
 ## Endpoints
 
 ### Criar Usuário
