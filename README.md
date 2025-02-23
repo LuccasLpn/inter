@@ -24,7 +24,7 @@ Antes de executar o projeto, certifique-se de ter instalado:
 
 1. Clone este repositório:
    ```sh
-   git clone https://github.com/seu-repositorio.git
+   git clone https://github.com/LuccasLpn/inter
    cd seu-repositorio
    ```
 
