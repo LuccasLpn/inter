@@ -162,7 +162,7 @@ curl --location 'http://localhost:8080/users' \
     "name": "Luccas Pereira Nunes",
     "email": "luccas.lpn@outlook.com",
     "document": "48188562823",
-    "password": "Lu072324*"
+    "password": "123456789"
 }'
 ```
 
