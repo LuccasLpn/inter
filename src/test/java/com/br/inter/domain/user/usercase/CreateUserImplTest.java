@@ -26,14 +26,11 @@ public class CreateUserImplTest {
     @Mock
     private CreateUserGateway createUserGateway;
 
-    @BeforeEach
-    void setUp() {
-        BDDMockito.when(createUserGateway.save(any(User.class)))
-                .thenReturn(UserFixture.createMockUser());
-    }
 
     @Test
     void testExecuteCreatesUser() {
+        BDDMockito.when(createUserGateway.save(any(User.class)))
+                .thenReturn(UserFixture.createMockUser());
         CreateUserRequest request = new CreateUserRequest();
         request.setName("Fulano de Tal");
         request.setEmail("fulano@example.com");

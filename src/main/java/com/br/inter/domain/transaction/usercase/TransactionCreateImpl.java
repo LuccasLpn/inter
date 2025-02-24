@@ -6,7 +6,7 @@ import com.br.inter.domain.transaction.gateway.TransactionGateway;
 
 public class TransactionCreateImpl implements TransactionCreate {
 
-    private TransactionGateway transactionGateway;
+    private final TransactionGateway transactionGateway;
 
     public TransactionCreateImpl(TransactionGateway transactionGateway) {
         this.transactionGateway = transactionGateway;
