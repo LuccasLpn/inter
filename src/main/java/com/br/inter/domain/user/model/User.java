@@ -3,11 +3,16 @@ package com.br.inter.domain.user.model;
 import com.br.inter.domain.wallet.enums.BalanceType;
 import com.br.inter.domain.wallet.model.Wallet;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     private Long id;
     private String name;
