@@ -20,6 +20,7 @@ public class CreateUserGatewayAdapter implements CreateUserGateway {
         UserEntity userEntity = UserFactory.createUserEntity(user);
         UserEntity userSaved = userRepository.save(userEntity);
         user.setId(userSaved.getId());
+        user.setUuid(userSaved.getUuid());
         return user;
     }
 

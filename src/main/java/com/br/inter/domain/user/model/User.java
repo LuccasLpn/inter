@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -21,6 +22,7 @@ public class User {
     private String document;
     @JsonIgnore
     private List<Wallet> wallets;
+    private UUID uuid;
 
     public User(String name, String email, String password, String document) {
         this.name = name;
