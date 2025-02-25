@@ -1,6 +1,7 @@
 package com.br.inter.application.request;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Setter
+@AllArgsConstructor
 public class CreateUserRequest {
     @NotNull(message = "name is not null")
     private String name;

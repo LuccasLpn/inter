@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:tc:mysql:8.0.33:///testdb  # Usa um MySQL em um container
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
