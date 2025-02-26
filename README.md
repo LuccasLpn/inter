@@ -41,7 +41,7 @@ Antes de executar o projeto, certifique-se de ter instalado:
    ```
    Ou utilizando o JAR gerado:
    ```sh
-   java -jar target/seu-projeto.jar
+   java -jar target/InterApplication.jar
    ```
 
 ## Estrutura do Banco de Dados
