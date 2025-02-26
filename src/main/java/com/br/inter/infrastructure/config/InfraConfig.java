@@ -6,9 +6,12 @@ import com.br.inter.domain.transaction.usercase.TransactionCreateImpl;
 import com.br.inter.domain.user.gateway.CreateUserGateway;
 import com.br.inter.domain.user.usercase.CreateUser;
 import com.br.inter.domain.user.usercase.CreateUserImpl;
+import com.br.inter.domain.wallet.gateway.FindAllWalletsGateway;
 import com.br.inter.domain.wallet.gateway.WalletAddBalanceGateway;
 import com.br.inter.domain.wallet.usercase.CreateBalanceWallet;
 import com.br.inter.domain.wallet.usercase.CreateBalanceWalletImpl;
+import com.br.inter.domain.wallet.usercase.FindAllWallets;
+import com.br.inter.domain.wallet.usercase.FindAllWalletsImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,5 +31,10 @@ public class InfraConfig {
     @Bean
     public TransactionCreate createTransaction(TransactionGateway transactionGateway) {
         return new TransactionCreateImpl(transactionGateway);
+    }
+
+    @Bean
+    public FindAllWallets findAllWallets(FindAllWalletsGateway findAllWalletsGateway) {
+        return new FindAllWalletsImpl(findAllWalletsGateway);
     }
 }
