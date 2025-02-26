@@ -18,7 +18,6 @@ Este projeto é uma API desenvolvida para gerenciar usuários, carteiras digitai
 Antes de executar o projeto, certifique-se de ter instalado:
 - **JDK 17**
 - **Docker e Docker Compose**
-- **MySQL**
 
 ### Passos para execução
 
@@ -221,6 +220,41 @@ curl --location 'http://localhost:8080/transactions/remittance' \
     "amount": 100,
     "transactionType": "TRANSFER",
     "status": "COMPLETED"
+}
+```
+## Tratamento de Erros e Exceções
+
+A API conta com um **Global Exception Handler** para capturar e tratar erros de forma padronizada. Isso garante que todas as respostas de erro sejam consistentes e informativas para os consumidores da API.
+
+### Exceções Tratadas
+
+Abaixo estão algumas das exceções personalizadas que podem ser lançadas durante a execução da API:
+
+| Exceção | Descrição |
+|---------|-----------|
+| `DailyLimitExceededException` | O usuário excedeu o limite diário de transações. |
+| `ExchangeRateUnavailableException` | A taxa de câmbio não está disponível no momento. |
+| `InsufficientFundsException` | O saldo da carteira é insuficiente para concluir a transação. |
+| `InvalidTransactionException` | A transação contém dados inválidos ou está em um estado inconsistente. |
+| `ReceiverWalletNotFoundException` | A carteira do destinatário não foi encontrada. |
+| `SenderWalletNotFoundException` | A carteira do remetente não foi encontrada. |
+| `UserAlreadyExistsException` | Já existe um usuário cadastrado com os mesmos dados. |
+| `WalletCurrencyNotFoundException` | A moeda da carteira não está cadastrada no sistema. |
+| `WalletNotFoundException` | A carteira informada não foi localizada. |
+
+### Formato de Resposta de Erro
+
+Quando ocorre uma exceção, a API retorna um **JSON estruturado** contendo informações sobre o erro:
+
+#### **Exemplo de Resposta - Erro de Saldo Insuficiente**
+```json
+{
+    "timestamp": "2025-02-25T14:30:00",
+    "status": 400,
+    "message": "Insufficient funds to complete the transaction.",
+    "errors": [
+        "The available balance in the wallet is less than the transaction amount."
+    ]
 }
 ```
 
