@@ -263,10 +263,13 @@ A API utiliza **Redis Cache** para armazenar temporariamente a última cotação
 
 Além disso, foi implementado um **Circuit Breaker** para gerenciar falhas na integração de cotação de moedas. Esse mecanismo **monitora a comunicação com o serviço externo** e, caso identifique falhas consecutivas, **interrompe temporariamente as requisições** para evitar sobrecarga e degradação da API.
 
-### Job de Limpeza do Cache
-Para garantir que os dados armazenados no cache estejam sempre atualizados e evitar o uso de cotações antigas, foi implementado um **job agendado** que **limpa o cache toda segunda-feira à meia-noite**.
+### Gerenciamento Automático do Cache com TTL
 
-Este job utiliza a funcionalidade do **Spring Scheduler** e executa a limpeza do cache automaticamente, garantindo que a API sempre consulte novas cotações ao longo da semana. Isso evita que usuários utilizem dados desatualizados e mantém a precisão das informações financeiras.
+Para garantir que os dados armazenados no cache estejam sempre atualizados e evitar o uso de cotações antigas, foi implementado um **mecanismo de expiração automática (TTL - Time-To-Live)**.
+
+Cada cotação armazenada no cache possui um **tempo de vida de 3 dias**, garantindo que as informações sejam automaticamente removidas e substituídas por novas quando necessário.
+
+Isso elimina a necessidade de um **job agendado**, reduzindo a carga no sistema e garantindo que a API sempre consulte novas cotações de forma eficiente. Dessa forma, os usuários têm acesso a dados atualizados sem riscos de utilizar informações desatualizadas.
 
 ### Job de Reset dos Limites Diários
 A API conta com um **job agendado para resetar os limites diários de transação**. Esse job é executado automaticamente **todos os dias à meia-noite** e tem como função garantir que os limites diários das carteiras dos usuários sejam redefinidos para permitir novas transações no dia seguinte.
